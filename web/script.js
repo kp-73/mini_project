@@ -1,5 +1,19 @@
-// Connect to Ethereum network using Web3.js
-const web3 = new Web3(Web3.givenProvider);
+const Web3 = require('web3');
+
+
+let web3Instance;
+
+// Check if Web3 is already defined (for example, by MetaMask)
+if (typeof web3 !== 'undefined') {
+  // Use the existing web3 provider
+  web3Instance = new Web3(web3.currentProvider);
+} else {
+  // Fallback to a Web3 provider you control (e.g., Ganache)
+  web3Instance = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")); // Update with your provider URL
+}
+
+// Now you can use web3Instance for your Web3 operations
+
 
 // Instantiate your smart contract
 const contractAddress = '0x50BAeeEe7E395a53661cE57c92C70d6E46F43f0c';
@@ -354,8 +368,17 @@ const contractAbi = [
       "type": "function"
     }
   ]
-       ]; // ABI of your smart contract
-const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+];
+
+//const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+
+
+
+
+
+// Add event listener for file upload form submission
+document.getElementById("uploadForm").addEventListener("submit", uploadFile);
+
 
 // Function to handle file upload form submission
 function uploadFile(event) {
